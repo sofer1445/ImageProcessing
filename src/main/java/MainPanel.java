@@ -23,7 +23,7 @@ public class MainPanel extends JPanel {
     public void startProgram(){
 
         this.searchButton = new JButton("search Button");
-        this.searchButton.setBounds(Final.WINDOW_WIDTH/2 - 100, Final.WINDOW_HEIGHT/5, 200, 50);
+        this.searchButton.setBounds(Final.X_SEARCH_BUTTON, Final.Y_SEARCH_BUTTON, 200, 50);
         this.add(searchButton);
 
         this.textField = new JTextField("search");
