@@ -1,11 +1,18 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Panel;
 import java.awt.image.BufferedImage;
+
 
 public class MainPanel extends JPanel {
 
     private JTextField textField;
+    private JTextField emailAccount;
+    private JTextField passwordAccount;
     private JButton searchButton;
     private JButton grayscaleButton;
     private JButton colorShiftRightButton;
@@ -13,6 +20,10 @@ public class MainPanel extends JPanel {
     private JButton sepiaButton;
     private JButton negativeButton;
     private PanelImage newPanel;
+    private ChromeOptions options;
+    private ChromeDriver driver;
+    private String email;
+    private String password;
 
 
     public MainPanel(int x, int y, int width, int height) {
@@ -21,18 +32,73 @@ public class MainPanel extends JPanel {
         startProgram();
         this.newPanel = new PanelImage(x, y, width, height);
         this.add(newPanel);
+        this.options = new ChromeOptions();
+
+
+
     }
 
+    public void loginToAFacebookAccount() {
+        options.addArguments("C:\\Users\\sofer\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\sofer\\OneDrive\\שולחן העבודה\\image\\chromedriver_win32 (1)\\chromedriver.exe");//שוהם
+        this.driver = new ChromeDriver(options);
+        driver.get("https://he-il.facebook.com/");
+        driver.manage().window().maximize();
+        Thread thread = new Thread(() -> {
+            WebElement enterEmail = driver.findElement(By.id("email"));
+            enterEmail.sendKeys(this.email);
+            WebElement enterPass = driver.findElement(By.id("pass"));
+            enterPass.sendKeys(this.password);
+            WebElement logIn = driver.findElement(By.id("u_0_d_YR"));
+            logIn.click();
+
+        });
+        thread.start();
+
+
+    }
 
     public void startProgram() {
 
         this.searchButton = new JButton("search Button");
         this.searchButton.setBounds(Final.X_SEARCH_BUTTON, Final.Y_SEARCH_BUTTON, 200, 50);
         this.add(searchButton);
+        searchButton.addActionListener(e -> {
+            try{
+                loginToAFacebookAccount();
+            }catch (Exception exception){
+                System.out.println(exception);
+            }
+
+        });
 
         this.textField = new JTextField("search");
         this.textField.setBounds(searchButton.getX(), searchButton.getY() - searchButton.getHeight(), searchButton.getWidth(), searchButton.getHeight());
         this.add(textField);
+
+        this.emailAccount = new JTextField("Enter an email");
+        this.emailAccount.setBounds(textField.getX() - textField.getWidth(), textField.getY() - textField.getHeight(), searchButton.getWidth(), searchButton.getHeight());
+        this.add(emailAccount);
+        emailAccount.addActionListener(e -> {
+            try {
+                this.email = emailAccount.getText();
+            } catch (Exception exception) {
+                System.out.println(exception);
+            }
+
+        });
+
+        this.passwordAccount = new JTextField("Enter an password");
+        this.passwordAccount.setBounds(emailAccount.getX() + emailAccount.getWidth(), textField.getY() - textField.getHeight(), searchButton.getWidth(), searchButton.getHeight());
+        this.add(passwordAccount);
+        passwordAccount.addActionListener(e -> {
+            try {
+                this.password = passwordAccount.getText();
+            } catch (Exception exception) {
+                System.out.println(exception);
+            }
+
+        });
 
         this.grayscaleButton = new JButton("Grayscale Button");
         this.grayscaleButton.setBounds(searchButton.getX(), searchButton.getY() + searchButton.getHeight(), searchButton.getWidth(), searchButton.getHeight());
@@ -158,8 +224,8 @@ public class MainPanel extends JPanel {
             for (int y = 0; y < height - 1; y++) {
                 int currentRgb = bufferedImage.getRGB(x, y);
                 Color currentColor = new Color(currentRgb);
-                int currentRed = (int)(currentColor.getRed() * 0.299);
-                int currentGreen = (int)(currentColor.getGreen() * 0.587);
+                int currentRed = (int) (currentColor.getRed() * 0.299);
+                int currentGreen = (int) (currentColor.getGreen() * 0.587);
                 int currentBlue = (int) (currentColor.getBlue() * 0.114);
                 int gray = currentRed + currentGreen + currentBlue;
                 Color newColor = new Color(gray, gray, gray);
