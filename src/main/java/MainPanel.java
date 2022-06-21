@@ -39,7 +39,7 @@ public class MainPanel extends JPanel {
     }
 
     public void loginToAFacebookAccount() {
-        options.addArguments("C:\\Users\\sofer\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
+        options.addArguments("user-data-dir=C:\\Users\\sofer\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\sofer\\OneDrive\\שולחן העבודה\\image\\chromedriver_win32 (1)\\chromedriver.exe");//שוהם
         this.driver = new ChromeDriver(options);
         driver.get("https://he-il.facebook.com/");
@@ -49,7 +49,7 @@ public class MainPanel extends JPanel {
             enterEmail.sendKeys(this.email);
             WebElement enterPass = driver.findElement(By.id("pass"));
             enterPass.sendKeys(this.password);
-            WebElement logIn = driver.findElement(By.id("u_0_d_YR"));
+            WebElement logIn = driver.findElement(By.xpath("//*[@id=\"u_0_d_XD\"]"));
             logIn.click();
 
         });
