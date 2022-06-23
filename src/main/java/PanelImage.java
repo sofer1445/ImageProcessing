@@ -9,45 +9,32 @@ public class PanelImage extends JPanel {
 
     private BufferedImage originalImage;
     private BufferedImage newImage;
+    private URL url;
 
-    public PanelImage(int x, int y, int width, int height) {
+
+    public PanelImage(int x, int y, int width, int height, URL url) {
         try {
             this.setLayout(null);
             this.setBounds(x, y, width, height);
             JLabel pic = new JLabel();
             JLabel pic2 = new JLabel();
-            URL url = new URL("https://sport1images.maariv.co.il/image/upload/1099630");
-            this.originalImage = pic(x, y, width / 2, height, url, pic);
-            this.newImage = pic(Final.WINDOW_WIDTH - Final.X_SEARCH_BUTTON, y, Final.X_SEARCH_BUTTON, height, url, pic2);
-
+            this.url = url;
+            this.originalImage = pic(x, y, width / 2, height, pic);
+            this.newImage = pic(Final.WINDOW_WIDTH - Final.X_SEARCH_BUTTON, y, Final.X_SEARCH_BUTTON, height, pic2);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    //    BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) throws IOException {
-//        BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
-//        Graphics2D graphics2D = resizedImage.createGraphics();
-//        graphics2D.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
-//        graphics2D.dispose();
-//        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-//קומבינות לשיפור תמונה
-//        return resizedImage;
-//    }
-//    BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) throws IOException {
-//        Image resultingImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_DEFAULT);
-//        BufferedImage outputImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
-//        outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
-//        return outputImage;
-//    }
-    public BufferedImage pic(int x, int y, int width, int height, URL url, JLabel pic) throws IOException {
+    public BufferedImage pic(int x, int y, int width, int height, JLabel pic) throws IOException {
         pic.setBounds(x, y, width, height);
-        BufferedImage bufferedImage = ImageIO.read(url);
+        BufferedImage bufferedImage = ImageIO.read(this.url);
         Image image = resize(bufferedImage, Final.X_SEARCH_BUTTON, height);
         BufferedImage buffer = (BufferedImage) image;
         pic.setIcon(new ImageIcon(image));
         this.add(pic);
         return buffer;
+
     }
 
     private BufferedImage resize(BufferedImage img, int width, int height) {
@@ -84,5 +71,11 @@ public class PanelImage extends JPanel {
         this.newImage = newImage;
     }
 
+    public URL getUrl() {
+        return url;
+    }
 
+    public void setUrl(URL url) {
+        this.url = url;
+    }
 }
