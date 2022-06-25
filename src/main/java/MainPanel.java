@@ -42,10 +42,8 @@ public class MainPanel extends JPanel {
     }
 
     public void loginToAFacebookAccount() {
-     //   System.setProperty("webdriver.chrome.driver", "C:\\Users\\sofer\\OneDrive\\שולחן העבודה\\image\\chromedriver_win32 (1)\\chromedriver.exe");//שוהם
-        //  options.addArguments("user-data-dir=C:\\Users\\sofer\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
-        System.setProperty("webdriver.chrome.driver", "" + "C:\\Users\\noymi\\Downloads\\chromedriver_win32\\chromedriver.exe");
-        options.addArguments("user-data-dir=C:\\Users\\noymi\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\sofer\\OneDrive\\שולחן העבודה\\image\\chromedriver_win32 (1)\\chromedriver.exe");//שוהם
+        options.addArguments("user-data-dir=C:\\Users\\sofer\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
         this.driver = new ChromeDriver(options);
         driver.get("https://he-il.facebook.com/");
         driver.manage().window().maximize();
@@ -55,7 +53,7 @@ public class MainPanel extends JPanel {
             WebElement enterPass = driver.findElement(By.id("pass"));
             enterPass.sendKeys(this.password);
             try {
-                Thread.sleep(Final.SLEEP);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -68,26 +66,24 @@ public class MainPanel extends JPanel {
     }
 
     public void FindingPeopleAndTakingAPicture() throws InterruptedException {
-     //   System.setProperty("webdriver.chrome.driver", "C:\\Users\\sofer\\OneDrive\\שולחן העבודה\\image\\chromedriver_win32 (1)\\chromedriver.exe");//שוהם
-      //  options.addArguments("user-data-dir=C:\\Users\\sofer\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
-        System.setProperty("webdriver.chrome.driver", "" + "C:\\Users\\noymi\\Downloads\\chromedriver_win32\\chromedriver.exe");
-        options.addArguments("user-data-dir=C:\\Users\\noymi\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\sofer\\OneDrive\\שולחן העבודה\\image\\chromedriver_win32 (1)\\chromedriver.exe");//שוהם
+        options.addArguments("user-data-dir=C:\\Users\\sofer\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
         this.driver = new ChromeDriver(options);
         driver.get("https://he-il.facebook.com/");
         driver.manage().window().maximize();
         System.out.println("start: FindingPeopleAndTakingAPicture");
         WebElement webElement = driver.findElement(By.cssSelector("div[aria-label='חפש בפייסבוק']"));
         webElement.click();
-        Thread.sleep(Final.SLEEP2);
+        Thread.sleep(1500);
         WebElement typeName = driver.findElement(By.cssSelector("input[role='combobox']"));
         typeName.sendKeys(this.userName);
-        Thread.sleep(Final.SLEEP2);
+        Thread.sleep(1500);
         WebElement click = driver.findElement(By.cssSelector("span[class='d2edcug0 hpfvmrgz qv66sw1b c1et5uql lr9zc1uh a8c37x1j fe6kdd0r mau55g9w c8b282yb keod5gw0 nxhoafnm aigsh9s9 d9wwppkn iv3no6db e9vueds3 j5wam9gi b1v8xokw m9osqain hzawbc8m']"));
         click.click();
-        Thread.sleep(Final.SLEEP2);
+        Thread.sleep(1500);
         WebElement imagePro = driver.findElement(By.cssSelector("image[style='height: 168px; width: 168px;']"));
         imagePro.click();
-        Thread.sleep(Final.SLEEP2);
+        Thread.sleep(1500);
         WebElement thisImage = driver.findElement(By.cssSelector("img[class='ji94ytn4 d2edcug0 r9f5tntg r0294ipz']"));//לא עובד צריך למצוא איך למשוך את קישור התמונה
         try {
             this.url = new URL(thisImage.getAttribute("src"));
@@ -105,7 +101,7 @@ public class MainPanel extends JPanel {
 
     public void startProgram() {
         this.searchButton = new JButton("search Button");
-        this.searchButton.setBounds(Final.X_SEARCH_BUTTON, Final.Y_SEARCH_BUTTON, Final.WIDTH_SEARCH, Final.HEIGHT_SEARCH);
+        this.searchButton.setBounds(Final.X_SEARCH_BUTTON, Final.Y_SEARCH_BUTTON, 200, 50);
         this.add(searchButton);
         searchButton.addActionListener(e -> {
             try {
@@ -192,8 +188,7 @@ public class MainPanel extends JPanel {
                 int currentRed = currentColor.getRed();
                 int currentGreen = currentColor.getGreen();
                 int currentBlue = currentColor.getBlue();
-                Color newColor = new Color(Final.NEW_COLOR - currentRed, Final.NEW_COLOR - currentGreen, Final
-                        .NEW_COLOR- currentBlue);
+                Color newColor = new Color(255 - currentRed, 255 - currentGreen, 255 - currentBlue);
                 bufferedImage.setRGB(x, y, newColor.getRGB());
             }
         }
@@ -207,17 +202,17 @@ public class MainPanel extends JPanel {
             for (int y = 0; y < height - 1; y++) {
                 int currentRgb = bufferedImage.getRGB(x, y);
                 Color currentColor = new Color(currentRgb);
-                int currentRed = (int) (currentColor.getRed() * Final.CURRENT_RED + currentColor.getGreen() * Final.CURRENT_GREEN + currentColor.getBlue() * Final.CURRENT_BLUE);
-                if (currentRed >= Final.NEW_COLOR) {
-                    currentRed = Final.NEW_COLOR;
+                int currentRed = (int) (currentColor.getRed() * 0.393 + currentColor.getGreen() * 0.769 + currentColor.getBlue() * 0.189);
+                if (currentRed >= 255) {
+                    currentRed = 255;
                 }
-                int currentGreen = (int) (currentColor.getRed() * Final.CURRENT_RED2 + currentColor.getGreen() * Final.CURRENT_GREEN2 + currentColor.getBlue() * Final.CURRENT_BLUE2);
-                if (currentGreen >= Final.NEW_COLOR) {
-                    currentGreen = Final.NEW_COLOR;
+                int currentGreen = (int) (currentColor.getRed() * 0.349 + currentColor.getGreen() * 0.686 + currentColor.getBlue() * 0.168);
+                if (currentGreen >= 255) {
+                    currentGreen = 255;
                 }
-                int currentBlue = (int) (currentColor.getRed() * Final.CURRENT_RED3 + currentColor.getGreen() * Final.CURRENT_GREEN3 + currentColor.getBlue() * Final.CURRENT_BLUE3);
-                if (currentBlue >= Final.NEW_COLOR) {
-                    currentBlue = Final.NEW_COLOR;
+                int currentBlue = (int) (currentColor.getRed() * 0.272 + currentColor.getGreen() * 0.534 + currentColor.getBlue() * 0.131);
+                if (currentBlue >= 255) {
+                    currentBlue = 255;
                 }
                 Color newColor = new Color(currentRed, currentGreen, currentBlue);
                 bufferedImage.setRGB(x, y, newColor.getRGB());
@@ -267,9 +262,9 @@ public class MainPanel extends JPanel {
             for (int y = 0; y < height - 1; y++) {
                 int currentRgb = bufferedImage.getRGB(x, y);
                 Color currentColor = new Color(currentRgb);
-                int currentRed = (int) (currentColor.getRed() * Final.GRAY_RED);
-                int currentGreen = (int) (currentColor.getGreen() * Final.GRAY_GREEN);
-                int currentBlue = (int) (currentColor.getBlue() * Final.GRAY_BLUE);
+                int currentRed = (int) (currentColor.getRed() * 0.299);
+                int currentGreen = (int) (currentColor.getGreen() * 0.587);
+                int currentBlue = (int) (currentColor.getBlue() * 0.114);
                 int gray = currentRed + currentGreen + currentBlue;
                 Color newColor = new Color(gray, gray, gray);
                 bufferedImage.setRGB(x, y, newColor.getRGB());
